@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/todoforvladimir/static/css/main.176417df.chunk.css",
+    "main.js": "/todoforvladimir/static/js/main.54829153.chunk.js",
+    "main.js.map": "/todoforvladimir/static/js/main.54829153.chunk.js.map",
+    "runtime-main.js": "/todoforvladimir/static/js/runtime-main.f25b8242.js",
+    "runtime-main.js.map": "/todoforvladimir/static/js/runtime-main.f25b8242.js.map",
+    "static/js/2.7ecaf9e4.chunk.js": "/todoforvladimir/static/js/2.7ecaf9e4.chunk.js",
+    "static/js/2.7ecaf9e4.chunk.js.map": "/todoforvladimir/static/js/2.7ecaf9e4.chunk.js.map",
+    "static/js/3.68b6042f.chunk.js": "/todoforvladimir/static/js/3.68b6042f.chunk.js",
+    "static/js/3.68b6042f.chunk.js.map": "/todoforvladimir/static/js/3.68b6042f.chunk.js.map",
+    "index.html": "/todoforvladimir/index.html",
+    "static/css/main.176417df.chunk.css.map": "/todoforvladimir/static/css/main.176417df.chunk.css.map",
+    "static/js/2.7ecaf9e4.chunk.js.LICENSE.txt": "/todoforvladimir/static/js/2.7ecaf9e4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f25b8242.js",
+    "static/js/2.7ecaf9e4.chunk.js",
+    "static/css/main.176417df.chunk.css",
+    "static/js/main.54829153.chunk.js"
+  ]
+}
