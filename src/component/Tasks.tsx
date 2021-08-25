@@ -61,10 +61,10 @@ export function Tasks() {
     function FilterTasks(): Array<TaskType> {
 
         if (filter === "active") {
-            return tasksForTodolist.tasks.filter(t => t.isDone === false);
+            return tasksForTodolist.tasks.filter(t => !t.isDone);
         }
         if (filter === "completed") {
-            return tasksForTodolist.tasks.filter(t => t.isDone === true);
+            return tasksForTodolist.tasks.filter(t => t.isDone);
         }
         return tasksForTodolist.tasks
     }
@@ -104,8 +104,8 @@ export function Tasks() {
                             if (t.task) {
                                 return <div key={t.id} className={classes.taskStyle}>
                                     <p>{t.task}
-                                        <input checked={t.isDone} onChange={(e) => onChangeCheckboxHandler(e, t.id)}
-                                               type={"checkbox"}/>
+                                        <input type={"checkbox"} checked={t.isDone || false} onChange={(e) => onChangeCheckboxHandler(e, t.id)}
+                                               />
                                         <button className={classes.btnDelete} onClick={() => deleteTask(t.id)}>-
                                         </button>
                                     </p>

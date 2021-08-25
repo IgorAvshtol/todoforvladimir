@@ -38,11 +38,14 @@ export const tasksReducer = (state: TasksType = initialState, action: ActionsTyp
         case 'CHANGE-TASK-STATUS': {
             const stateCopy = {...state};
             let tasks = stateCopy;
+            console.log("first",tasks)
             let task = tasks.tasks.find(t => t.id === action.taskId);
+            console.log("2",task)
             if (task) {
                 task.isDone = action.isDone;
+
             }
-            console.log(stateCopy)
+            console.log("3",stateCopy)
             return stateCopy;
         }
         default:
