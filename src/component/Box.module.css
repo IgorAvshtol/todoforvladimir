@@ -1,0 +1,11 @@
+.allStyle {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    height: 100vh;
+}
+
+.box {
+    width: 20%;
+    border: 2px;
+}
