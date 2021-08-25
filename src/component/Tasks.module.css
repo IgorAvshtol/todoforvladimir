@@ -1,0 +1,37 @@
+.main {
+    height: 100%;
+    width: 40%;
+    border: 1px solid #282c34;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btnDelete {
+    background: #8cc1d2;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.btnAdd {
+    background: #8cc1d2;
+    border-radius: 5px;
+}
+
+.input1 {
+    border-radius: 5px;
+}
+
+.taskStyle {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.errorMessage {
+    color: red
+}
