@@ -9,7 +9,13 @@ export type TaskType = {
 }
 
 export type TasksType = {
-    tasks: Array<TaskType>
+    tasks: TaskType[]
+}
+
+enum TypeKeys {
+    ADD_TASK = "ADD-TASK",
+    DELETE_TASK = "DELETE-TASK",
+    CHANGE_TASK_STATUS = "CHANGE-TASK-STATUS"
 }
 
 export type FilterValuesType = "all" | "active" | "completed"
@@ -23,26 +29,24 @@ const initialState: TasksType = {
 
 export const tasksReducer = (state: TasksType = initialState, action: ActionsType) => {
     switch (action.type) {
-        case 'ADD-TASK': {
+        case TypeKeys.ADD_TASK: {
             return {
                 ...state,
                 tasks: [...state.tasks, {id: v1(), task: action.task}]
             }
         }
-        case 'DELETE-TASK': {
+        case TypeKeys.DELETE_TASK: {
             return {
                 ...state,
                 tasks: [...state.tasks.filter((s) => s.id !== action.taskId)]
             }
         }
-        case 'CHANGE-TASK-STATUS': {
+        case TypeKeys.CHANGE_TASK_STATUS: {
             const stateCopy = {...state};
-            let tasks = stateCopy;
-            let task = tasks.tasks.find(t => t.id === action.taskId);
+            let task = stateCopy.tasks.find(t => t.id === action.taskId);
             if (task) {
                 task.isDone = action.isDone;
             }
-            console.log(stateCopy)
             return stateCopy;
         }
         default:
@@ -51,20 +55,20 @@ export const tasksReducer = (state: TasksType = initialState, action: ActionsTyp
     }
 }
 
-type ActionsType = AddTaskActionType | DeleteTaskActionType | ChangeTaskStatusActionType | FilterTasksActionType
+type ActionsType = AddTaskActionType | DeleteTaskActionType | ChangeTaskStatusActionType
 
 export type AddTaskActionType = {
-    type: 'ADD-TASK'
+    type: TypeKeys.ADD_TASK
     task: string
 }
 
 export type DeleteTaskActionType = {
-    type: 'DELETE-TASK'
+    type: TypeKeys.DELETE_TASK
     taskId: string
 }
 
 export type ChangeTaskStatusActionType = {
-    type: 'CHANGE-TASK-STATUS'
+    type: TypeKeys.CHANGE_TASK_STATUS
     taskId: string
     isDone: boolean
 }
@@ -75,18 +79,13 @@ export type FilterTasksActionType = {
 }
 
 export const addTaskAC = (task: string): AddTaskActionType => {
-    return {type: 'ADD-TASK', task}
+    return {type: TypeKeys.ADD_TASK, task}
 }
 
 export const deleteTaskAC = (taskId: string): DeleteTaskActionType => {
-    return {type: 'DELETE-TASK', taskId}
+    return {type: TypeKeys.DELETE_TASK, taskId}
 }
 
 export const changeTaskStatusAC = (taskId: string, isDone: boolean) => {
-    return {type: 'CHANGE-TASK-STATUS', taskId, isDone}
-
-}
-
-export const changeTodolistFilterAC = (filter: FilterValuesType) => {
-    return {type: 'FILTER-TASKS', filter: filter}
+    return {type: TypeKeys.CHANGE_TASK_STATUS, taskId, isDone}
 }
