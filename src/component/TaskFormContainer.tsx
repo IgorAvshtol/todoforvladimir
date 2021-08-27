@@ -10,7 +10,7 @@ export function TaskFormContainer() {
     }
 
     return (
-        <div className={classes.allStyle} >
+        <div className={classes.containerStyle} >
             <Box card={index === 1} moveCard={moveCard.bind(null, 1)}></Box>
             <Box card={index === 2} moveCard={moveCard.bind(null, 2)}></Box>
             <Box card={index === 3} moveCard={moveCard.bind(null, 3)}></Box>
