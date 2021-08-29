@@ -1,4 +1,5 @@
-import {v1} from "uuid";
+import { v1 } from "uuid";
+import { InferActionsTypes } from "./store";
 
 
 export type TaskType = {
@@ -18,7 +19,12 @@ enum TypeKeys {
     CHANGE_TASK_STATUS = "CHANGE-TASK-STATUS"
 }
 
-export type FilterValuesType = "all" | "active" | "completed"
+export enum FilterKeys {
+    All = "all",
+    Active = "active",
+    Completed = "completed"
+}
+
 
 const initialState: TasksType = {
     tasks:
@@ -32,60 +38,33 @@ export const tasksReducer = (state: TasksType = initialState, action: ActionsTyp
         case TypeKeys.ADD_TASK: {
             return {
                 ...state,
-                tasks: [...state.tasks, {id: v1(), task: action.task}]
+                tasks: [...state.tasks, {id: v1(), task: action.payload.task, isDone: false}]
             }
         }
         case TypeKeys.DELETE_TASK: {
             return {
                 ...state,
-                tasks: [...state.tasks.filter((s) => s.id !== action.taskId)]
+                tasks: [...state.tasks.filter((s) => s.id !== action.payload.taskId)]
             }
         }
         case TypeKeys.CHANGE_TASK_STATUS: {
             const stateCopy = {...state};
-            let task = stateCopy.tasks.find(t => t.id === action.taskId);
+            const task = stateCopy.tasks.find(t => t.id === action.payload.taskId);
             if (task) {
-                task.isDone = action.isDone;
+                task.isDone = action.payload.isDone;
             }
             return stateCopy;
         }
         default:
             return state;
-
     }
 }
 
-type ActionsType = AddTaskActionType | DeleteTaskActionType | ChangeTaskStatusActionType
+type ActionsType = InferActionsTypes<typeof actions>
 
-export type AddTaskActionType = {
-    type: TypeKeys.ADD_TASK
-    task: string
+export const actions = {
+    addTaskAC: (task: string) => ({type: TypeKeys.ADD_TASK, payload: {task}} as const),
+    deleteTaskAC: (taskId: string) => ({type: TypeKeys.DELETE_TASK, payload: {taskId}} as const),
+    changeTaskStatusAC: (taskId: string, isDone: boolean) => ({type: TypeKeys.CHANGE_TASK_STATUS, payload: {taskId, isDone}} as const)
 }
 
-export type DeleteTaskActionType = {
-    type: TypeKeys.DELETE_TASK
-    taskId: string
-}
-
-export type ChangeTaskStatusActionType = {
-    type: TypeKeys.CHANGE_TASK_STATUS
-    taskId: string
-    isDone: boolean
-}
-
-export type FilterTasksActionType = {
-    type: 'FILTER-TASKS'
-    filter: FilterValuesType
-}
-
-export const addTaskAC = (task: string): AddTaskActionType => {
-    return {type: TypeKeys.ADD_TASK, task}
-}
-
-export const deleteTaskAC = (taskId: string): DeleteTaskActionType => {
-    return {type: TypeKeys.DELETE_TASK, taskId}
-}
-
-export const changeTaskStatusAC = (taskId: string, isDone: boolean) => {
-    return {type: TypeKeys.CHANGE_TASK_STATUS, taskId, isDone}
-}

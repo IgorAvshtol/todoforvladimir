@@ -1,14 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../store/store";
-import {
-    addTaskAC,
-    changeTaskStatusAC,
-    deleteTaskAC,
-    FilterValuesType,
-    TasksType,
-    TaskType
-} from "../store/tasks-reducer";
+import { actions, FilterKeys, TasksType, TaskType } from "../store/tasks-reducer";
 import { Task } from "./Task";
 
 
@@ -17,7 +10,7 @@ export function TasksForm() {
     const dispatch = useDispatch()
 
     const deleteTaskFromRedux = (id: string) => {
-        dispatch(deleteTaskAC(id))
+        dispatch(actions.deleteTaskAC(id))
     }
 
     const [title, setTitle] = useState<string>("")
@@ -26,7 +19,7 @@ export function TasksForm() {
 
     const addTask = () => {
         if (title.trim() !== "") {
-            dispatch(addTaskAC(title.trim()))
+            dispatch(actions.addTaskAC(title.trim()))
             setTitle("");
         } else {
             setError("Title is required");
@@ -44,19 +37,19 @@ export function TasksForm() {
 
     const onChangeCheckboxHandler = (id: string, e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
-        dispatch(changeTaskStatusAC(id, newIsDoneValue))
+        dispatch(actions.changeTaskStatusAC(id, newIsDoneValue))
     }
 
-    let [filter, setFilter] = useState<FilterValuesType>("all");
+    let [filter, setFilter] = useState<FilterKeys>(FilterKeys.All);
 
     let tasksForTodolist = useSelector<AppRootStateType, TasksType>(state => state.tasks);
 
     function FilterTasks(): TaskType[] {
 
-        if (filter === "active") {
+        if (filter === FilterKeys.Active) {
             return tasksForTodolist.tasks.filter(t => !t.isDone);
         }
-        if (filter === "completed") {
+        if (filter === FilterKeys.Completed) {
             return tasksForTodolist.tasks.filter(t => t.isDone);
         }
         return tasksForTodolist.tasks
@@ -64,30 +57,30 @@ export function TasksForm() {
 
 
     const onAllClickHandler = () => {
-        setFilter("all")
+        setFilter(FilterKeys.All)
     }
 
     const onActiveClickHandler = () => {
-        setFilter("active")
+        setFilter(FilterKeys.Active)
     }
 
     const onCompletedClickHandler = () => {
-        setFilter("completed")
+        setFilter(FilterKeys.Completed)
     }
 
     return (
         <div>
-            <Task onAllClickHandler={onAllClickHandler}
-                  onActiveClickHandler={onActiveClickHandler}
-                  onCompletedClickHandler={onCompletedClickHandler}
-                  FilterTasks={FilterTasks}
-                  addTask={addTask}
-                  deleteTask={deleteTask}
-                  onChangeHandler={onChangeHandler}
-                  onChangeCheckboxHandler={onChangeCheckboxHandler}
-                  title={title}
-                  error={error}
-            />
+                <Task onAllClickHandler={onAllClickHandler}
+                      onActiveClickHandler={onActiveClickHandler}
+                      onCompletedClickHandler={onCompletedClickHandler}
+                      FilterTasks={FilterTasks}
+                      addTask={addTask}
+                      deleteTask={deleteTask}
+                      onChangeHandler={onChangeHandler}
+                      onChangeCheckboxHandler={onChangeCheckboxHandler}
+                      title={title}
+                      error={error}
+                />
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import { TasksForm } from "./TasksForm";
-import classes from "./Box.module.css"
+import classes from "./Box.module.css";
 
 export function Box({card, moveCard}: any) {
     const [{isOver}, dropRef] = useDrop({
@@ -16,7 +16,7 @@ export function Box({card, moveCard}: any) {
             className={classes.box}
             ref={dropRef}
             style={{
-                backgroundColor: isOver ? "white" : "white"
+                backgroundColor: isOver ? "white" : "#c5dcc5"
             }}
         >
             {card ? <TasksForm/> : ""}

@@ -1,7 +1,11 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { TaskType } from "../store/tasks-reducer";
 import classes from "./Task.module.css";
 import { useDrag } from "react-dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import Button from "@material-ui/core/Button";
+import { Checkbox, IconButton, TextField } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 type TaskFormType = {
     onAllClickHandler: () => void;
@@ -34,42 +38,75 @@ export function Task(props: TaskFormType) {
         props.onChangeCheckboxHandler(id, e)
     }
 
+    const [characters, setCharacters] = useState<TaskType[]>(props.FilterTasks());
+
+    useEffect(() => {
+            setCharacters(props.FilterTasks())
+        }, [props]
+    )
+
+    function handleOnDragEnd(result: any) {
+        if (!result.destination) return;
+        const items = [...characters];
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        setCharacters(items);
+    }
 
     return (
         <div ref={dragRef} className={isDragging ? classes.mainForMovable : classes.main}>
-            <b>Tasks:</b>
-            <div>
-                <input name={"Tasks"}
-                       value={props.title}
-                       onChange={props.onChangeHandler}
-                       className={classes.input1}
+            <div className={classes.inputBlock}>
+                <TextField id="outlined-basic" label="Task" variant="outlined"
+                           value={props.title}
+                           onChange={props.onChangeHandler}
+                           className={classes.input1}
                 />
-                <button className={classes.btnAdd} onClick={props.addTask}>+</button>
+                <Button size="small" variant="outlined" className={classes.btnAdd} onClick={props.addTask}>+</Button>
                 {props.error && <div className={classes.errorMessage}>{props.error}</div>}
             </div>
-            <div>
-                {
-                    props.FilterTasks().map((t) => {
-                            if (t.task) {
-                                return <div key={t.id} className={classes.taskStyle}>
-                                    <p>{t.task}
-                                        <input type={"checkbox"} checked={t.isDone || false}
-                                               onChange={(e) => onClickChangeCheckboxHandler(t.id, e)}
-                                        />
-                                        <button className={classes.btnDelete} onClick={() => onClickDeleteTask(t.id)}>-
-                                        </button>
-                                    </p>
-                                </div>
-                            }
-                        }
-                    )
-                }
-                <div className={classes.allBtnStyle}>
-                    <button onClick={props.onAllClickHandler}>All</button>
-                    <button onClick={props.onActiveClickHandler}>Active</button>
-                    <button onClick={props.onCompletedClickHandler}>Completed</button>
-                </div>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId={"droppable"}>
+                    {(provided) => (
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
+                            <div>
+                                {
+                                    characters.map((t, index) => {
+                                            if (t.task) {
+                                                return <div key={t.id} className={classes.taskStyle}>
+                                                    <Draggable key={t.id} draggableId={t.id} index={index}>
+                                                        {(provided) => (
+                                                            <div
+                                                                ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                                <p>{t.task}
+                                                                    <Checkbox checked={t.isDone || false}
+                                                                              onChange={(e) => onClickChangeCheckboxHandler(t.id, e)}
+                                                                              name="checkedA"/>
+                                                                    <IconButton onClick={() => onClickDeleteTask(t.id)}
+                                                                                aria-label="delete"
+                                                                                className={classes.margin}>
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                </p>
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                </div>
+                                            }
+                                        }
+                                    )
+                                }
+                                {provided.placeholder}
+                            </div>
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
+            <div className={classes.allBtnStyle}>
+                <Button onClick={props.onAllClickHandler}>All</Button>
+                <Button onClick={props.onActiveClickHandler}>Active</Button>
+                <Button onClick={props.onCompletedClickHandler}>Completed</Button>
             </div>
         </div>
     )
 }
+
