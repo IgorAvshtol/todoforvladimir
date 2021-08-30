@@ -1,0 +1,66 @@
+.main {
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #c5dcc5;
+}
+
+.inputBlock {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btnAdd {
+    background: #8cc1d2;
+    border-radius: 5px;
+    position: absolute;
+    top: 5px;
+    width: 10px;
+}
+
+.taskStyle {
+    display: flex;
+    width: 100vh;
+    justify-content: start;
+}
+
+.itemStyle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    border-bottom: 2px solid currentColor;
+}
+
+.checkAndDelete {
+
+}
+
+.allBtnStyle {
+    display: flex;
+    margin: 20px;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.allBtnStyle button {
+    background: #8cc1d2;
+    border-radius: 5px;
+}
+
+.btnDelete {
+    background: #8cc1d2;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.input1 {
+    border-radius: 5px;
+}
+
+.errorMessage {
+    color: red;
+}

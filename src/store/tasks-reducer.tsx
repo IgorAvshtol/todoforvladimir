@@ -1,12 +1,11 @@
-import {v1} from 'uuid';
-import {InferActionsTypes} from './store';
+import { v1 } from 'uuid';
+import { InferActionsTypes } from './store';
 
 
 export type TaskType = {
     id: string
     task: string
     isDone: boolean
-
 }
 
 export type TasksType = {
@@ -82,6 +81,9 @@ export const actions = {
     addTaskAC: (task: string) => ({type: TypeKeys.ADD_TASK, payload: {task}} as const),
     updateStateAC: (tasks: TaskType[]) => ({type: TypeKeys.UPDATE_STATE, payload: {tasks}} as const),
     deleteTaskAC: (taskId: string) => ({type: TypeKeys.DELETE_TASK, payload: {taskId}} as const),
-    changeTaskStatusAC: (taskId: string, isDone: boolean) => ({type: TypeKeys.CHANGE_TASK_STATUS, payload: {taskId, isDone}} as const)
+    changeTaskStatusAC: (taskId: string, isDone: boolean) => ({
+        type: TypeKeys.CHANGE_TASK_STATUS,
+        payload: {taskId, isDone}
+    } as const)
 }
 
