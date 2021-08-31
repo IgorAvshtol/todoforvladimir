@@ -1,11 +1,10 @@
-import React from "react";
-import { TasksForm } from "./component/TasksForm";
-
+import React from 'react';
+import { Task } from './component/Task/Task';
 
 function App() {
-    return (
-        <TasksForm/>
-    );
+  return (
+      <Task/>
+  );
 }
 
 export default App;

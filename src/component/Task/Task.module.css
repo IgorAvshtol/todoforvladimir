@@ -1,6 +1,6 @@
 .main {
     width: 100vh;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: #c5dcc5;
@@ -35,10 +35,6 @@
     border-bottom: 2px solid currentColor;
 }
 
-.checkAndDelete {
-
-}
-
 .allBtnStyle {
     display: flex;
     margin: 20px;
@@ -63,4 +59,5 @@
 
 .errorMessage {
     color: red;
+    padding-top: 5px;
 }
