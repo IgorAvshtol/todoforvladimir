@@ -1,9 +1,10 @@
 import React, { ChangeEvent } from 'react';
 
-import classes from '../Task/Task.module.css';
 import { Draggable } from 'react-beautiful-dnd';
 import { Checkbox, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+import classes from '../TasksList/TaskList.module.css';
 
 type TaskItemPropsType = {
   id: string

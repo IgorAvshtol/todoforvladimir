@@ -2,8 +2,8 @@ import { ChangeEvent, useState } from 'react';
 
 export const useInput = () => {
 
-  const [value, setValue] = useState<string>("")
-  const [error, setError] = useState<string>("")
+  const [value, setValue] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   return {
     value,
